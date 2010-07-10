@@ -1,0 +1,1 @@
+This is the original JEnable that I downloaded from http://www.sosnoski.com/opensrc/jenable/download.html and it's supposed to be version 0.8 although nothing in the manifest of the jar says so, the version itself can be found in the jenable.java source file. 

@@ -1,0 +1,41 @@
+<HTML>
+
+<HEAD>
+ <TITLE>JEnable Source Configuration Processor</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="white">
+<H1>JEnable Source Configuration Processor</H1>
+
+<p>The <code>JEnable</code> program gives an easy way of controlling different
+build options within Java source code. It allows you to maintain and distribute a single set of
+source files which can support multiple configurations. The program can be executed from
+various types of build scripts (including Ant scripts) to automatically change the
+source configuration on demand.</p>
+
+<p>Although similar in some respects to preprocessors used with other programming
+languages, <code>JEnable</code> differs in that it is intended to be run as a batch
+processor to change the current configuration for an entire project at once. After the
+configuration has been changed, source files can be edited and compiled normally with
+no need to rerun the <code>JEnable</code> program until the configuration is again changed.</p>
+
+<p><code>JEnable</code> uses control information embedded in Java code as comment
+lines with a special format. This approach means that there is no need to maintain a
+separate database of the source code changes needed to implement a configuration change.
+Normal editing of the source code is not effected by the use of <code>JEnable</code>
+control information at all.</p>
+
+<p>Examples of the type of configuration options which <code>JEnable</code> makes easy
+are debug vs non-debug builds, JDK 1.1 vs 1.2 support, and reduced function builds for a
+smaller distribution file size.</p>
+
+<p>
+<table width="90%" align="center" cellspacing="12">
+<tr><td><a href="formats.html">Control Statement Formats</a></td></tr>
+<tr><td><a href="usage.html">Program Usage</a></td></tr>
+<tr><td><a href="example.html">Usage Example</a></td></tr>
+</table>
+</p>
+
+</BODY>
+</HTML>

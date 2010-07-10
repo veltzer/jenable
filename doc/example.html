@@ -1,0 +1,246 @@
+<HTML>
+
+<HEAD>
+ <TITLE>JEnable Program Example</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="white">
+<H1>JEnable Program Example</H1>
+
+<p>Here's an actual example of the <code>JEnable</code> program in use. Let's say
+we start with a class which wraps a <code>String</code> and provides access to the
+characters of the <code>String</code> one at a time:
+<pre><code>public class StringWrapper
+{
+    protected String m_text;
+    protected int m_offset;
+
+    public StringWrapper(String text) {
+        m_text = text;
+    }
+
+    public int next() {
+        if (++m_offset &lt; m_text.length()) {
+            return m_text.charAt(m_offset);
+        } else {
+            return -1;
+        }
+    }
+
+    public int getOffset() {
+        return m_offset;
+    }
+
+    public void setOffset(int offset) {
+        m_offset = offset;
+    }
+
+    public int at(int offset) {
+        if (offset &lt; m_text.length()) {
+            return m_text.charAt(offset);
+        } else {
+            return -1;
+        }
+    }
+
+    public String substring(int start) {
+        return m_text.substring(start, m_offset);
+    }
+}</code></pre></p>
+
+<p>This is fine as far as it goes, but we decide we really want to be able to build
+it in different flavors for different projects. In one case, we want to make
+the wrapper instances reusable with different <code>String</code>s. In another case,
+we want to prevent the user from changing position within the <code>String</code>,
+limiting them to moving through it one character at a time, but figure we may as
+well let them reset to the start position in this case.</p>
+
+<p>After making the code changes to support all this, and adding the configuration
+control information, we end up with:
+<pre><code>public class StringWrapper
+{
+    protected String m_text;
+    protected int m_offset;
+
+//#REUSE{
+    public StringWrapper() {}
+//#}REUSE{
+    public StringWrapper(String text) {
+        m_text = text;
+    }
+//#REUSE}
+
+//#REUSE{
+    public void setText(String text) {
+        m_text = text;
+        m_offset = 0;
+    }
+//#REUSE}
+
+    public int next() {
+        if (++m_offset &lt; m_text.length()) {
+            return m_text.charAt(m_offset);
+        } else {
+            return -1;
+        }
+    }
+
+//#!LIMIT{
+    public int getOffset() {
+        return m_offset;
+    }
+
+    public void setOffset(int offset) {
+        m_offset = offset;
+    }
+
+    public int at(int offset) {
+        if (offset &lt; m_text.length()) {
+            return m_text.charAt(offset);
+        } else {
+            return -1;
+        }
+    }
+
+    public String substring(int start) {
+        return m_text.substring(start, m_offset);
+    }
+//#}LIMIT{
+    public void reset() {
+        m_offset = 0;
+    }
+//#LIMIT}
+}</code></pre>
+At this point none of the optional code blocks have been disabled, since <code>JEnable</code>
+hasn't been run on the source code. If we now execute <code>JEnable</code> with the line:
+<pre>
+<code>java JEnable -d REUSE StringWrapper.java</code>
+</pre>
+our source code becomes:
+<pre><code>public class StringWrapper
+{
+    protected String m_text;
+    protected int m_offset;
+
+//#REUSE{
+//#REUSE:    public StringWrapper() {}
+//#}REUSE{
+    public StringWrapper(String text) {
+        m_text = text;
+    }
+//#REUSE}
+
+//#REUSE{
+//#REUSE:    public void setText(String text) {
+//#REUSE:        m_text = text;
+//#REUSE:        m_offset = 0;
+//#REUSE:    }
+//#REUSE}
+
+    public int next() {
+        if (++m_offset &lt; m_text.length()) {
+            return m_text.charAt(m_offset);
+        } else {
+            return -1;
+        }
+    }
+
+//#!LIMIT{
+    public int getOffset() {
+        return m_offset;
+    }
+
+    public void setOffset(int offset) {
+        m_offset = offset;
+    }
+
+    public int at(int offset) {
+        if (offset &lt; m_text.length()) {
+            return m_text.charAt(offset);
+        } else {
+            return -1;
+        }
+    }
+
+    public String substring(int start) {
+        return m_text.substring(start, m_offset);
+    }
+//#}LIMIT{
+    public void reset() {
+        m_offset = 0;
+    }
+//#LIMIT}
+}</code></pre>
+Only the code within the <code>REUSE</code> token conditional block has been modified,
+since only this is the only token which was specified as either enabled or disabled.</p>
+
+<p>If we now change our mind and want to build the reusable form of the class with
+limited user access, we run <code>JEnable</code> again with the line:
+<pre>
+<code>java JEnable -e REUSE,LIMIT StringWrapper.java</code>
+</pre>
+Now our source code becomes:
+<pre><code>public class StringWrapper
+{
+    protected String m_text;
+    protected int m_offset;
+
+//#REUSE{
+    public StringWrapper() {}
+//#}REUSE{
+//#REUSE:    public StringWrapper(String text) {
+//#REUSE:        m_text = text;
+//#REUSE:    }
+//#REUSE}
+
+//#REUSE{
+    public void setText(String text) {
+        m_text = text;
+        m_offset = 0;
+    }
+//#REUSE}
+
+    public int next() {
+        if (++m_offset &lt; m_text.length()) {
+            return m_text.charAt(m_offset);
+        } else {
+            return -1;
+        }
+    }
+
+//#!LIMIT{
+//#LIMIT:    public int getOffset() {
+//#LIMIT:        return m_offset;
+//#LIMIT:    }
+//#LIMIT:
+//#LIMIT:    public void setOffset(int offset) {
+//#LIMIT:        m_offset = offset;
+//#LIMIT:    }
+//#LIMIT:
+//#LIMIT:    public int at(int offset) {
+//#LIMIT:        if (offset &lt; m_text.length()) {
+//#LIMIT:            return m_text.charAt(offset);
+//#LIMIT:        } else {
+//#LIMIT:            return -1;
+//#LIMIT:        }
+//#LIMIT:    }
+//#LIMIT:
+//#LIMIT:    public String substring(int start) {
+//#LIMIT:        return m_text.substring(start, m_offset);
+//#LIMIT:    }
+//#}LIMIT{
+    public void reset() {
+        m_offset = 0;
+    }
+//#LIMIT}
+}</code></pre>
+Since we gave settings for both tokens this time, both blocks of code were modified. The
+<code>LIMIT</code> optional code block uses a '!' before the token, so the code which follows
+is commented out. The else marker line "<code>//#}LIMIT{</code>" reverses the prior state and
+allows the code which follows that marker to be active.</p>
+
+<p>If you've downloaded the code this sample file is included, so you can experiment with
+it for yourself.</p>
+
+</BODY>
+</HTML>
