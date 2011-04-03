@@ -20,5 +20,8 @@ compile.tag: $(SRC_FILES) $(ALL_DEP)
 clean:
 	-rm $(CLASS_FILES) compile.tag $(JAR)
 .PHONY: seejar
-seejar:
+seejar: $(JAR) $(ALL_DEP)
 	jar tvf $(JAR)
+.PHONY: run
+run: $(JAR) $(ALL_DEP)
+	java -jar $(JAR)
