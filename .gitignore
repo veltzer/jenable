@@ -4,6 +4,6 @@
 # exclude patterns (uncomment them if you want to use them):
 # *.[oa]
 # *~
-out/*.class
+bin/*.class
 jenable.jar
 compile.tag
