@@ -57,7 +57,7 @@ import java.util.*;
  * is not on either list.
  *
  * @author Dennis M. Sosnoski
- * @version 0.8
+ * @version 0.9
  */
 
 public class JEnable
