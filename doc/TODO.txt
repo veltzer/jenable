@@ -1,1 +1,12 @@
+build system
+============
 - move build system to ant
+- upload to ibiblio automatically on new release.
+
+website
+=======
+- build a website for this project.
+
+tests
+=====
+- add tests
