@@ -154,10 +154,10 @@ public class JEnable
 	protected File m_backupDir;
 
 	/** Map for enabled tokens (values same as keys). */
-	protected Hashtable m_enabledTokens;
+	protected Hashtable<String, String> m_enabledTokens;
 
 	/** Map for disabled tokens (values same as keys). */
-	protected Hashtable m_disabledTokens;
+	protected Hashtable<String, String> m_disabledTokens;
 
 	/** Number of files matched. */
 	protected int m_matchedCount;
@@ -189,7 +189,7 @@ public class JEnable
 	 */
 
 	protected JEnable(boolean keep, boolean mark, boolean mods, boolean quiet,
-		boolean verbose, File backup, Hashtable enabled, Hashtable disabled) {
+		boolean verbose, File backup, Hashtable<String, String> enabled, Hashtable<String, String> disabled) {
 		m_keepStamp = keep;
 		m_markBackup = mark;
 		m_listModified = mods;
