@@ -2,9 +2,9 @@
 # PARAMETERS #
 ##############
 # should we show commands executed?
-DO_MKDBG?=0
+DO_MKDBG:=0
 # should we depend on the date of the makefile itself ?
-DO_ALL_DEP?=1
+DO_ALL_DEP:=1
 # where is the source folder?
 SRC_FOLDER:=src
 # where is the bin folder?
