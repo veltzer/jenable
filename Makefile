@@ -34,7 +34,8 @@ endif # DO_MKDBG
 
 .PHONY: all
 all: $(JAR) $(ALL_DEP)
-	$(info doing [$@])
+	@true
+
 # next target creates the class folder for the case in which full clear
 # including purging of empty dirs was performed...
 $(JAR): compile.tag manifest $(ALL_DEP)
