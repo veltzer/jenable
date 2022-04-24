@@ -7,3 +7,4 @@
 bin/*.class
 jenable.jar
 compile.tag
+*.stamp
