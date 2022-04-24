@@ -5,6 +5,12 @@
 DO_MKDBG:=0
 # should we depend on the date of the makefile itself ?
 DO_ALLDEP:=1
+# do tools?
+DO_TOOLS:=1
+
+########
+# code #
+########
 # where is the source folder?
 SRC_FOLDER:=src
 # where is the bin folder?
@@ -14,9 +20,6 @@ SRC_FILES:=$(shell find $(SRC_FOLDER) -type f -name "*.java")
 # what is the jar file we produce?
 JAR:=jenable.jar
 
-########
-# BODY #
-########
 # dependency on the makefile itself
 ifeq ($(DO_ALLDEP),1)
 .EXTRA_PREREQS+=$(foreach mk, ${MAKEFILE_LIST},$(abspath ${mk}))
@@ -30,6 +33,9 @@ Q=@
 #.SILENT:
 endif # DO_MKDBG
 
+#########
+# rules #
+#########
 .PHONY: all
 all: $(JAR)
 	@true
@@ -49,6 +55,10 @@ compile.tag: $(SRC_FILES)
 clean:
 	$(info doing [$@])
 	$(Q)-rm -rf $(CLASS_FOLDER) compile.tag $(JAR)
+.PHONY: clean_hard
+clean_hard:
+	$(info doing [$@])
+	$(Q)git clean -qffxd
 .PHONY: seejar
 seejar: $(JAR)
 	$(Q)jar tvf $(JAR)
