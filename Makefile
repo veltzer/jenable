@@ -49,7 +49,7 @@ ALL+=$(JAR)
 all: $(ALL)
 	@true
 
-$(TOOLS): packages.txt
+$(TOOLS): packages.txt config/deps.py
 	$(info doing [$@])
 	$(Q)xargs -a packages.txt sudo apt-get install
 	$(Q)touch $(TOOLS)
