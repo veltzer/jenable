@@ -5,8 +5,6 @@
 DO_MKDBG:=0
 # should we depend on the date of the makefile itself ?
 DO_ALLDEP:=1
-# do tools?
-DO_TOOLS:=1
 
 ########
 # code #
@@ -19,18 +17,11 @@ CLASS_FOLDER:=bin
 SRC_FILES:=$(shell find $(SRC_FOLDER) -type f -name "*.java")
 # what is the jar file we produce?
 JAR:=jenable.jar
-# what is the tools stamp?
-TOOLS:=tools.stamp
 
 # dependency on the makefile itself
 ifeq ($(DO_ALLDEP),1)
 .EXTRA_PREREQS+=$(foreach mk, ${MAKEFILE_LIST},$(abspath ${mk}))
 endif # DO_ALLDEP
-
-ifeq ($(DO_TOOLS),1)
-.EXTRA_PREREQS+=$(TOOLS)
-ALL+=$(TOOLS)
-endif # DO_TOOLS
 
 ifeq ($(DO_MKDBG),1)
 Q=
@@ -48,11 +39,6 @@ ALL+=$(JAR)
 .PHONY: all
 all: $(ALL)
 	@true
-
-$(TOOLS): packages.txt config/deps.py
-	$(info doing [$@])
-	$(Q)xargs -a packages.txt sudo apt-get -y install
-	$(Q)touch $(TOOLS)
 
 # next target creates the class folder for the case in which full clear
 # including purging of empty dirs was performed...
