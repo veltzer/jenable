@@ -8,3 +8,5 @@ bin/*.class
 jenable.jar
 compile.tag
 *.stamp
+__pycache__
+/.pydmt
