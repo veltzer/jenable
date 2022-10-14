@@ -1,3 +1,3 @@
 packages=[
-    'openjdk-11-jdk-headless:amd64',
+    "openjdk-11-jdk-headless:amd64",
 ]
