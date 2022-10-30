@@ -42,19 +42,19 @@ all: $(ALL)
 
 # next target creates the class folder for the case in which full clear
 # including purging of empty dirs was performed...
-$(JAR): compile.stamp manifest
+$(JAR): out/compile.stamp manifest
 	$(info doing [$@])
 	$(Q)mkdir -p $(CLASS_FOLDER)
 	$(Q)jar cmf manifest $@ -C $(CLASS_FOLDER) .
-compile.stamp: $(SRC_FILES)
+out/compile.stamp: $(SRC_FILES)
 	$(info doing [$@])
 	$(Q)mkdir -p $(CLASS_FOLDER)
 	$(Q)javac -Xlint:all $(SRC_FILES) -d $(CLASS_FOLDER)
-	$(Q)touch compile.stamp
+	$(Q)pymakehelper touch_mkdir $@
 .PHONY: clean
 clean:
 	$(info doing [$@])
-	$(Q)-rm -rf $(CLASS_FOLDER) compile.stamp $(JAR)
+	$(Q)-rm -rf $(CLASS_FOLDER) out/compile.stamp $(JAR)
 .PHONY: clean_hard
 clean_hard:
 	$(info doing [$@])
