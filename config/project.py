@@ -1,3 +1,7 @@
 name = "jenable"
 description_short = "macro processor for Java"
-keywords = []
+keywords = [
+    "macro-preprocessor",
+    "java",
+    "preprocessor",
+]
