@@ -18,11 +18,6 @@ SRC_FILES:=$(shell find $(SRC_FOLDER) -type f -name "*.java")
 # what is the jar file we produce?
 JAR:=jenable.jar
 
-# dependency on the makefile itself
-ifeq ($(DO_ALLDEP),1)
-.EXTRA_PREREQS+=$(foreach mk, ${MAKEFILE_LIST},$(abspath ${mk}))
-endif # DO_ALLDEP
-
 ifeq ($(DO_MKDBG),1)
 Q=
 # we are not silent in this branch
@@ -72,3 +67,10 @@ debug:
 	$(info CLASS_FOLDER is $(CLASS_FOLDER))
 	$(info JAR is $(JAR))
 	$(info ALL is $(ALL))
+
+##########
+# alldep #
+##########
+ifeq ($(DO_ALLDEP),1)
+.EXTRA_PREREQS+=$(foreach mk, ${MAKEFILE_LIST},$(abspath ${mk}))
+endif # DO_ALLDEP
