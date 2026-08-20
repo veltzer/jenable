@@ -1,1 +1,9 @@
 # Repo-specific overlay. Deep-merged over the canonical rsconstruct.toml.
+
+# The Makefile compiled src/**/*.java together with
+# `javac -Xlint:all <sources> -d bin`. scripts/javac_build.py runs that exact
+# command; the explicit processor triggers it on any .java change.
+[processor.explicit.java]
+command = "scripts/javac_build.py"
+input_globs = ["src/**/*.java"]
+output_dirs = ["bin"]
