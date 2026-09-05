@@ -1,4 +1,4 @@
-# jenable
+# java-jenable
 
 JEnable, a macro processor for Java.
 
